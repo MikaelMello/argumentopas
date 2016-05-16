@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.mikaelmello.argumentopas.ActivityAjuda"
+    android:background="#ccc">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logopas"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Utilidades da Calculadora PAS"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginBottom="3dp"/>
+        <me.biubiubiu.justifytext.library.JustifyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="&#8226; Fácil visualização dos argumentos mínimos de cada curso oferecido pela Universidade de Brasília;\n&#8226; Cálculo aproximado dos argumentos obtidos no primeiro e segundo ano de realização do PAS;\n&#8226; Cálculo aproximado do argumento faltante: argumento necessário no 3º ano do PAS para o usuário adentrar os cursos selecionados;\n&#8226; Cálculo aproximado do Escore Bruto e da Nota de Redação necessários para atingir o argumento faltante.\n&#8226; Aviso: Como o PAS agora terá o dobro de vagas, provavelmente as notas de corte diminuirão, logo talvez você precise de uma nota menor do que a informada neste aplicativo.\n"
+            android:textSize="15sp"
+            android:layout_marginLeft="12dp"
+            android:textColor="#222"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Como usar?"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginBottom="3dp"/>
+        <me.biubiubiu.justifytext.library.JustifyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='&#8226; No menu inicial, clique no botão "Calcular".\n&#8226; Preencha os campos disponíveis com os seus respectivos valores de acordo com seu resultado no PAS 1.\n&#8226; Faça o mesmo, de  acordo com o seu PAS 2.\n&#8226; Selecione o idioma que será escolhido no PAS 3, o sistema de concorrência que irás participar (se usará cotas ou não) e o campus em que pretende estudar.\n&#8226; Escolha até 5 cursos nos quais você se interessa.\n'
+            android:textSize="15sp"
+            android:layout_marginLeft="12dp"
+            android:textColor="#222"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. O que o resultado significa?"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginBottom="3dp"/>
+        <me.biubiubiu.justifytext.library.JustifyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='&#8226; Argumento Mínimo - Nota do concorrente aprovado em último lugar no sistema de concorrencia escolhido.\n&#8226; Argumento Faltante: Argumento mínimo subtraído de seu argumento atual, calculado acima.\n&#8226; Esc. Bruto e Nota de Redação Necessário: Valores aproximados do mínimo necessário em cada tipo de nota para atingir o argumento faltante.\n'
+            android:textSize="15sp"
+            android:layout_marginLeft="12dp"
+            android:textColor="#222"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Sobre o Aplicativo"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginBottom="3dp"/>
+        <me.biubiubiu.justifytext.library.JustifyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='&#8226; As informações presentes neste aplicativo não garantem sua aprovação na universidade com a nota mínima exibida. É exibida apenas uma aproximação baseada nas notas de corte do Subprograma 2013-2015. Tenha em mente que as notas de corte variam conforme o ano e que o aplicativo não se responsabiliza por reprovação no concurso mesmo se o argumento adquirido era igual ou maior ao calculado pelo aplicativo.\n'
+            android:textSize="15sp"
+            android:layout_marginLeft="12dp"
+            android:textColor="#222"/>
+    </LinearLayout>
+</ScrollView>

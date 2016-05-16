@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ccc"
+    android:orientation="vertical"
+    tools:context="com.mikaelmello.argumentopas.ActivityCursos">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:paddingLeft="10dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:background="#aaa">
+        <ImageView
+            android:layout_weight="9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_school_black_24dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Escolha de Cursos"
+            android:textSize="20sp"
+            android:textColor="#000"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        android:layout_marginBottom="5dp"/>
+    <ListView
+        android:layout_weight="100"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/cursos"
+        android:layout_margin="10dp"></ListView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/finalbutton"
+        android:text="Obter Resultado"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
+
+</LinearLayout>
