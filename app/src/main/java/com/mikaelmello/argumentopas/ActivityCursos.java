@@ -19,8 +19,11 @@ import java.util.ArrayList;
 
 public class ActivityCursos extends Activity {
 
+    // Variables
     MyCustomAdapter dataAdapter = null;
     public String campus = null;
+
+    // Number of selected courses
     public int currentnumber = 0;
 
     @Override
@@ -28,21 +31,32 @@ public class ActivityCursos extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_cursos);
 
+        // Getting the campus field from the previous activity
         final Bundle bundle = getIntent().getExtras();
         String campus1 = bundle.getString("campus");
         campus = campus1;
 
+        // Method to display all the available courses
         displayListView();
 
+        // Buttom to initiate the next activity
         Button myButton = (Button) findViewById(R.id.finalbutton);
+
+        // Listener
         myButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
+                // Bundle to store the selected courses
                 Bundle responseText = new Bundle();
 
+                // Copying the array from displayListView()
+                // TODO: Check if it is really a copy or a pointer, if it is necessary to do that
+                // TODO: and also check what is in this array, what else besides the course itself.
                 ArrayList<Cursos> cursosList = dataAdapter.cursosList;
+
+                // Iterates through all courses and adding the selected ones to the bundle
                 for (int i = 0; i < cursosList.size(); i++) {
                     Cursos curso = cursosList.get(i);
                     if (curso.isSelected()) {
@@ -52,10 +66,15 @@ public class ActivityCursos extends Activity {
                     }
                 }
 
+                // Only 5 courses at once are allowed for aesthetical reasons.
                 if (currentnumber > 5) {
                     Toast.makeText(getApplicationContext(), "Você só pode selecionar até 5 cursos por vez.", Toast.LENGTH_LONG).show();
                     currentnumber = 0;
                 } else {
+
+                    // If everything is right, pass on the bundle from the previous activity,
+                    // The number of courses selected and the courses themselves
+
                     Intent intent = new Intent(ActivityCursos.this, ActivityResultado.class);
                     intent.putExtra("Current", currentnumber);
                     intent.putExtra("Cursos", responseText);
@@ -73,7 +92,10 @@ public class ActivityCursos extends Activity {
     private void displayListView() {
 
         ArrayList<Cursos> cursosList = new ArrayList<Cursos>();
-        //Array list of countries
+
+        // Checks the selected campus and initializes an array with all the courses from it.
+        // To never forget: the pain in the *** it was to write everything down.
+        // TODO: Check if there's a better way to do this
 
         if(campus.equalsIgnoreCase("Darcy Ribeiro")) {
             Cursos curso = new Cursos("Diurno", "Administração", "-48.068", "null", "-79.192", "-21.64", "-9.611", "45.738");
@@ -282,16 +304,20 @@ public class ActivityCursos extends Activity {
             curso = null;
         }
 
-        //create an ArrayAdaptar from the String Array
+        // creates an ArrayAdaptar from the Cursos Array
         dataAdapter = new MyCustomAdapter(this,
                 R.layout.simple_list_item_1, cursosList);
+
+        // Assign adapter to the only ListView in the activity
         ListView listView = (ListView) findViewById(R.id.cursos);
-        // Assign adapter to ListView
         listView.setAdapter(dataAdapter);
 
 
 
     }
+
+    // TODO: Discover from where the hell I found this and also properly know how this works.
+    // TODO: Never copy and paste code ever again.
 
     private class MyCustomAdapter extends ArrayAdapter<Cursos> {
 
