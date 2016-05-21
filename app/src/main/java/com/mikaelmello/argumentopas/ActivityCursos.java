@@ -33,8 +33,7 @@ public class ActivityCursos extends Activity {
 
         // Getting the campus field from the previous activity
         final Bundle bundle = getIntent().getExtras();
-        String campus1 = bundle.getString("campus");
-        campus = campus1;
+        campus = bundle.getString("campus");
 
         // Method to display all the available courses
         displayListView();
@@ -51,9 +50,7 @@ public class ActivityCursos extends Activity {
                 // Bundle to store the selected courses
                 Bundle responseText = new Bundle();
 
-                // Copying the array from displayListView()
-                // TODO: Check if it is really a copy or a pointer, if it is necessary to do that
-                // TODO: and also check what is in this array, what else besides the course itself.
+                // Getting the cursosList under a new variable.
                 ArrayList<Cursos> cursosList = dataAdapter.cursosList;
 
                 // Iterates through all courses and adding the selected ones to the bundle
@@ -61,7 +58,6 @@ public class ActivityCursos extends Activity {
                     Cursos curso = cursosList.get(i);
                     if (curso.isSelected()) {
                         currentnumber++;
-                        //responseText.putStringArrayList("Curso" + currentnumber, curso.getCursoTotal());
                         responseText.putSerializable("Curso " + currentnumber, curso);
                     }
                 }
@@ -91,11 +87,10 @@ public class ActivityCursos extends Activity {
 
     private void displayListView() {
 
-        ArrayList<Cursos> cursosList = new ArrayList<Cursos>();
+        ArrayList<Cursos> cursosList = new ArrayList<>();
 
         // Checks the selected campus and initializes an array with all the courses from it.
         // To never forget: the pain in the *** it was to write everything down.
-        // TODO: Check if there's a better way to do this
 
         if(campus.equalsIgnoreCase("Darcy Ribeiro")) {
             Cursos curso = new Cursos("Diurno", "Administração", "-48.068", "null", "-79.192", "-21.64", "-9.611", "45.738");
@@ -270,7 +265,6 @@ public class ActivityCursos extends Activity {
             cursosList.add(curso);
             curso = new Cursos("Noturno", "Teoria Crítica e Hist. da Arte (Not)", "null", "null", "1.618", "-38.649", "-16.58", "-33.841");
             cursosList.add(curso);
-            curso = null;
         }
         else if(campus.equalsIgnoreCase("Planaltina")) {
             Cursos curso = new Cursos("Diurno", "Ciências Naturais", "-75.719", "null", "null", "-50.953", "null", "-71.268");
@@ -281,7 +275,6 @@ public class ActivityCursos extends Activity {
             cursosList.add(curso);
             curso = new Cursos("Diurno", "Gestão Ambiental (Not)", "null", "null", "-59.507", "null", "null", "-94.204");
             cursosList.add(curso);
-            curso = null;
         }
         else if(campus.equalsIgnoreCase("Ceilândia")) {
             Cursos curso = new Cursos("Diurno", "Enfermagem", "-73.436", "-59.69", "-17.34", "-0.543", "8.181", "31.588");
@@ -296,12 +289,10 @@ public class ActivityCursos extends Activity {
             cursosList.add(curso);
             curso = new Cursos("Diurno", "Terapia Ocupacional", "-67.415", "-36.774", "-53.009", "-19.614", "-25.032", "-15.872");
             cursosList.add(curso);
-            curso = null;
         }
         else if(campus.equalsIgnoreCase("Gama")) {
             Cursos curso = new Cursos("Diurno", "Engenharia", "-60.136", "-57.355", "-82.924", "-72.792", "44.741", "49.765");
             cursosList.add(curso);
-            curso = null;
         }
 
         // creates an ArrayAdaptar from the Cursos Array
@@ -316,9 +307,6 @@ public class ActivityCursos extends Activity {
 
     }
 
-    // TODO: Discover from where the hell I found this and also properly know how this works.
-    // TODO: Never copy and paste code ever again.
-
     private class MyCustomAdapter extends ArrayAdapter<Cursos> {
 
         private ArrayList<Cursos> cursosList;
@@ -326,7 +314,7 @@ public class ActivityCursos extends Activity {
         public MyCustomAdapter(Context context, int textViewResourceId,
                                ArrayList<Cursos> cursosList) {
             super(context, textViewResourceId, cursosList);
-            this.cursosList = new ArrayList<Cursos>();
+            this.cursosList = new ArrayList<>();
             this.cursosList.addAll(cursosList);
         }
 
@@ -334,7 +322,6 @@ public class ActivityCursos extends Activity {
             TextView code;
             CheckBox name;
         }
-
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -345,7 +332,7 @@ public class ActivityCursos extends Activity {
             if (convertView == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(
                         Context.LAYOUT_INFLATER_SERVICE);
-                convertView = vi.inflate(R.layout.simple_list_item_1, null);
+                convertView = vi.inflate(R.layout.simple_list_item_1, parent, false);
 
                 holder = new ViewHolder();
                 holder.code = (TextView) convertView.findViewById(R.id.code);

@@ -1,13 +1,8 @@
 package com.mikaelmello.argumentopas;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Mikael on 02/03/2016.
- */
 public class Cursos implements Serializable {
     protected String turno = null;
     protected String curso = null;
@@ -35,7 +30,7 @@ public class Cursos implements Serializable {
     }
 
     public ArrayList<String> getCursoTotal() {
-        ArrayList<String> geral = new ArrayList<String>();
+        ArrayList<String> geral = new ArrayList<>();
         geral.add(this.turno);
         geral.add(this.curso);
         geral.add(this.pppi);
@@ -48,10 +43,10 @@ public class Cursos implements Serializable {
     }
 
     public boolean isSelected(){
-        return isSelected;
+        return this.isSelected;
     }
 
     public void setSelected(Boolean selection){
-        isSelected = selection;
+        this.isSelected = selection;
     }
 }

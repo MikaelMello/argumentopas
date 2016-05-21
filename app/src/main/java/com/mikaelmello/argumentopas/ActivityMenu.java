@@ -74,6 +74,7 @@ public class ActivityMenu extends Activity {
 
                         // Testing of multiple conditions that may cause the app to crash or to
                         // not work properly. They are: empty fields or invalid numeric input.
+                        // TODO: Handle error where the input of a comma crashes the app.
                         if(isEmpty(ebUm)) Toast.makeText(getApplicationContext(),"Preencha o campo de\nEscore Bruto do PAS 1.", Toast.LENGTH_LONG).show();
                         else if(isEmpty(ebDois)) Toast.makeText(getApplicationContext(),"Preencha o campo de\nEscore Bruto do PAS 2.", Toast.LENGTH_LONG).show();
                         else if(isEmpty(redaçãoUm)) Toast.makeText(getApplicationContext(),"Preencha o campo de\nRedação do PAS 1.", Toast.LENGTH_LONG).show();
@@ -107,11 +108,7 @@ public class ActivityMenu extends Activity {
 
     // Checks if an EditText is empty.
     private boolean isEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return etText.getText().toString().trim().length() <= 0;
     }
 
     // Initiates the spinners
@@ -121,7 +118,7 @@ public class ActivityMenu extends Activity {
         spinnerCampus = (Spinner)findViewById(R.id.spinnerCampus);
         final String[] allCampuses = {"Darcy Ribeiro", "Planaltina", "Ceilândia", "Gama"};
 
-        ArrayAdapter<String> adapterCampus = new ArrayAdapter<String>(ActivityMenu.this,
+        ArrayAdapter<String> adapterCampus = new ArrayAdapter<>(ActivityMenu.this,
                 R.layout.spinner_item,allCampuses);
         adapterCampus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCampus.setAdapter(adapterCampus);
@@ -136,7 +133,7 @@ public class ActivityMenu extends Activity {
                 "Rede Pública - > 1,5 Salário Mínimo - PPI",
                 "Rede Pública - > 1,5 Salário Mínimo - NÃO PPI"};
 
-        ArrayAdapter<String> adapterCotas = new ArrayAdapter<String>(ActivityMenu.this,
+        ArrayAdapter<String> adapterCotas = new ArrayAdapter<>(ActivityMenu.this,
                 R.layout.spinner_item,allSistemas);
         adapterCotas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCotas.setAdapter(adapterCotas);
@@ -149,7 +146,7 @@ public class ActivityMenu extends Activity {
         spinnerL2 = (Spinner)findViewById(R.id.spinnerLinguaDois);
         spinnerL3 = (Spinner)findViewById(R.id.spinnerLinguaTrês);
 
-        ArrayAdapter<String> adapterLinguas = new ArrayAdapter<String>(ActivityMenu.this,
+        ArrayAdapter<String> adapterLinguas = new ArrayAdapter<>(ActivityMenu.this,
                 R.layout.spinner_item,idiomasPAS);
         adapterLinguas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

@@ -14,13 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ActivityResultado extends AppCompatActivity {
 
     // Cursos, dados, intent = data from the previous activity
-    private Bundle cursos;
-    private Bundle dados;
-    private Intent intent;
 
     // Adapter to initialize the results in the ListView
     MyCustomAdapter dataAdapter = null;
@@ -42,9 +40,8 @@ public class ActivityResultado extends AppCompatActivity {
     // Final argument
     private double ARGF = 0;
 
-    // J is an array to store the chosen language in each year.
-    // TODO: Change its name to a better one
-    int j[] = new int[3];
+    // Array to store the chosen language in each year.
+    int selectedLanguage[] = new int[3];
 
     // Stores the chosen quota and the quantity of chosen courses.
     String cotas;
@@ -56,9 +53,9 @@ public class ActivityResultado extends AppCompatActivity {
         setContentView(R.layout.activity_activity_resultado);
 
         // Initializes the intent and get bundles out.
-        intent = getIntent();
-        cursos = intent.getBundleExtra("Cursos");
-        dados = intent.getBundleExtra("Dados");
+        Intent intent = getIntent();
+        Bundle cursos = intent.getBundleExtra("Cursos");
+        Bundle dados = intent.getBundleExtra("Dados");
 
         // TODO: Write a REAL error handler.
         if (cursos != null && dados != null ) {
@@ -67,12 +64,12 @@ public class ActivityResultado extends AppCompatActivity {
             // Sets the campus field
             temporary = dados.getString("campus");
             TextView textView = (TextView) findViewById(R.id.campusfinal);
-            textView.setText(temporary);
+            if (textView != null) textView.setText(temporary);
 
             // Sets the cotas field
             cotas = dados.getString("cotas");
             textView = (TextView) findViewById(R.id.sistemacotas);
-            textView.setText(cotas);
+            if (textView != null) textView.setText(cotas);
 
             // Turns the scores from strings to floats.
             eb[0] = Float.parseFloat(dados.getString("eb1"));
@@ -80,21 +77,28 @@ public class ActivityResultado extends AppCompatActivity {
             red[0] = Float.parseFloat(dados.getString("redação1"));
             red[1] = Float.parseFloat(dados.getString("redação2"));
 
-            // Sets the J array content to its respective chosen language in the ith year.
-            // TODO: Use a loop, for god's sake.
+            // Sets the language array content to its respective chosen language in the ith year.
+            // If an error happens, it is English by default.
             String lingua1 = dados.getString("idioma1");
             String lingua2 = dados.getString("idioma2");
             String lingua3 = dados.getString("idioma3");
 
-            if(lingua1.equalsIgnoreCase("Espanhol")) j[0] = 1;
-            else if(lingua1.equalsIgnoreCase("Inglês")) j[0] = 0;
-            else if(lingua1.equalsIgnoreCase("Francês")) j[0] = 2;
-            if(lingua2.equalsIgnoreCase("Espanhol")) j[1] = 1;
-            else if(lingua2.equalsIgnoreCase("Inglês")) j[1] = 0;
-            else if(lingua2.equalsIgnoreCase("Francês")) j[1] = 2;
-            if(lingua3.equalsIgnoreCase("Espanhol")) j[2] = 1;
-            else if(lingua3.equalsIgnoreCase("Inglês")) j[2] = 0;
-            else if(lingua3.equalsIgnoreCase("Francês")) j[2] = 2;
+            if (lingua1 != null && lingua2 != null && lingua3 != null) {
+                if (lingua1.equalsIgnoreCase("Espanhol")) selectedLanguage[0] = 1;
+                else if (lingua1.equalsIgnoreCase("Inglês")) selectedLanguage[0] = 0;
+                else if (lingua1.equalsIgnoreCase("Francês")) selectedLanguage[0] = 2;
+                if (lingua2.equalsIgnoreCase("Espanhol")) selectedLanguage[1] = 1;
+                else if (lingua2.equalsIgnoreCase("Inglês")) selectedLanguage[1] = 0;
+                else if (lingua2.equalsIgnoreCase("Francês")) selectedLanguage[1] = 2;
+                if (lingua3.equalsIgnoreCase("Espanhol")) selectedLanguage[2] = 1;
+                else if (lingua3.equalsIgnoreCase("Inglês")) selectedLanguage[2] = 0;
+                else if (lingua3.equalsIgnoreCase("Francês")) selectedLanguage[2] = 2;
+            }
+            else {
+                selectedLanguage[0] = 0;
+                selectedLanguage[1] = 0;
+                selectedLanguage[2] = 0;
+            }
 
 
             // Sets the data for each language in each year.
@@ -126,12 +130,10 @@ public class ActivityResultado extends AppCompatActivity {
             // screen. Calculation based on 2013-2015 data.
             for (int i = 0; i < 2; i++) {
                 // k = Index of the language chosen in the ith year.
-                int k = j[i];
+                int k = selectedLanguage[i];
 
                 // APP = Afastamento Padronizado. Reformulated because the user does not input
                 // specific data (score of the part 1 of the exam, only part 1 and 2 together).
-                // TODO: Reformulate this based on the latest edital, it seems to be different
-                // Link: http://www.cespe.unb.br/pas/arquivos/PAS%201%20Abt%202015-2017.pdf
                 double APP = (eb[i] - medialingua[k][i] - mediaescbruto[i]) * 10 / (dplingua[k][i] + DPEB[i]);
 
                 // APPR = Afastamento Padronizado da Redação.
@@ -139,7 +141,7 @@ public class ActivityResultado extends AppCompatActivity {
 
                 // Calculating the argument of the current year and turning it into a string.
                 double ARG = 0.9 * APP + 0.1 * APPR;
-                temporary = String.format("%.3g%n", ARG);
+                temporary = String.format(Locale.getDefault(), "%.3g%n", ARG);
 
                 // Selecting the respective TextView and also adding the current argument to the
                 // final argument (to be used later)
@@ -150,20 +152,18 @@ public class ActivityResultado extends AppCompatActivity {
                     ARGF = ARGF + ARG + ARG;
                     textView = (TextView) findViewById(R.id.argumentopas2);
                 }
-                textView.setText(temporary);
+                if (textView != null) textView.setText(temporary);
             }
 
             // Showing the current final argument (without the 3rd year of the exam).
-            temporary = String.format("%.5g%n", ARGF);
+            temporary = String.format(Locale.getDefault(), "%.5g%n", ARGF);
             textView = (TextView) findViewById(R.id.argumentototal);
-            textView.setText(temporary);
+            if (textView != null) textView.setText(temporary);
 
-            // TODO: Find out why the hell this variable exists.
-            // Not removing it now because I'm not sure if it is necessary or not for the getIntExtra()
-            int lel = 0;
-            currentnumber = intent.getIntExtra("Current", lel);
+            // Getting the number of courses selected. 0 by default.
+            currentnumber = intent.getIntExtra("Current", 0);
 
-            displayListView();
+            displayListView(cursos);
 
         }
         // Worst error handling of all known history.
@@ -171,9 +171,9 @@ public class ActivityResultado extends AppCompatActivity {
 
     }
 
-    private void displayListView() {
+    private void displayListView(Bundle cursos) {
 
-        ArrayList<Cursos> cursosList = new ArrayList<Cursos>();
+        ArrayList<Cursos> cursosList = new ArrayList<>();
 
         // Getting the selected courses back into an array.
         for (int i = 1; i <= currentnumber; i++) {
@@ -181,15 +181,16 @@ public class ActivityResultado extends AppCompatActivity {
             cursosList.add(curso);
         }
 
-        //create an ArrayAdaptar from the Cursos Array
-        dataAdapter = new MyCustomAdapter(this,
-                R.layout.simple_list_item_2, cursosList);
-        ListView listView = (ListView) findViewById(R.id.cursosfinal);
+        //create an ArrayAdapter from the Cursos Array
+        ListView listView;
+        do {
+            dataAdapter = new MyCustomAdapter(this,
+                    R.layout.simple_list_item_2, cursosList);
+            listView = (ListView) findViewById(R.id.cursosfinal);
+        } while (dataAdapter == null || listView == null);
         // Assign adapter to ListView
         listView.setAdapter(dataAdapter);
     }
-
-    // TODO: Same as the previous activity, know properly how this works.
 
     private class MyCustomAdapter extends ArrayAdapter<Cursos> {
 
@@ -198,7 +199,7 @@ public class ActivityResultado extends AppCompatActivity {
         public MyCustomAdapter(Context context, int textViewResourceId,
                                ArrayList<Cursos> cursosList) {
             super(context, textViewResourceId, cursosList);
-            this.cursosList = new ArrayList<Cursos>();
+            this.cursosList = new ArrayList<>();
             this.cursosList.addAll(cursosList);
         }
 
@@ -220,7 +221,7 @@ public class ActivityResultado extends AppCompatActivity {
             if (convertView == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(
                         Context.LAYOUT_INFLATER_SERVICE);
-                convertView = vi.inflate(R.layout.simple_list_item_2, null);
+                convertView = vi.inflate(R.layout.simple_list_item_2, parent, false);
 
                 holder = new ViewHolder();
                 holder.cursonome = (TextView) convertView.findViewById(R.id.cursonome);
@@ -272,7 +273,7 @@ public class ActivityResultado extends AppCompatActivity {
             holder.argminimo.setText(argminimo1.replace('.', ','));
 
             // Shows the argument left to reach the minimum argument.
-            holder.argfaltante.setText(String.format("%.3g", argminimo));
+            holder.argfaltante.setText(String.format(Locale.getDefault(), "%.3g", argminimo));
 
             // Calculating the necessary Brute Score to reach the minimum score.
             // It is based on an assumption that the Essay only takes 7% of the year's final argument.
@@ -287,7 +288,7 @@ public class ActivityResultado extends AppCompatActivity {
 
             // Replacing the data and isolating the Brute Score I found this equation, which has
             // already been tested and the results were consistent with reality.
-            double EBF = (APP * (dplingua[j[2]][2] + DPEB[2]) / 9) + (medialingua[j[2]][2] + mediaescbruto[2]);
+            double EBF = (APP * (dplingua[selectedLanguage[2]][2] + DPEB[2]) / 9) + (medialingua[selectedLanguage[2]][2] + mediaescbruto[2]);
 
             // If EBF is less than 0, it is set to 0.1 because getting a score lower than 0
             // eliminates you from the exam.
@@ -296,7 +297,7 @@ public class ActivityResultado extends AppCompatActivity {
             if (EBF < 0 || isNull) {
                 EBF = 0.1;
             }
-            holder.notaescbruto.setText(String.format("%.3g", EBF));
+            holder.notaescbruto.setText(String.format(Locale.getDefault(), "%.3g", EBF));
 
             // Same thing from EBF, but this time doing with the Essay score.
             double REDF = (argp3 * 0.07) * DPR[2] + mediaredação[2];
@@ -312,7 +313,7 @@ public class ActivityResultado extends AppCompatActivity {
 
             // If even after that your needed score is below 0, it is set to 0.1.
             if (REDF < 0) REDF = 0.1;
-            holder.notaredação.setText(String.format("%.3g", REDF));
+            holder.notaredação.setText(String.format(Locale.getDefault(), "%.3g", REDF));
 
             return convertView;
 
